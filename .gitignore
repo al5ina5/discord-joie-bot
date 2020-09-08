@@ -1,0 +1,4 @@
+.DS_Store
+bot-settings.json
+.env
+node_modules
