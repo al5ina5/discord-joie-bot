@@ -1,11 +1,10 @@
-const db = require('../mongo')
+le.logconst db = require('../mongo')
 
 exports.run = async (client, message, args) => {
     var mention = message.mentions.users.first()
     if (!mention) {
         db.UserModel.findOne({ discord_id: message.author.id }, (error, user) => {
             if (error) throw error
-            console.log(user)
             if (user) {
                 message.channel.send(`You currently have ${user.points} helper point(s).`)
             } else {
