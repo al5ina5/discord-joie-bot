@@ -1,16 +1,25 @@
 const db = require('../mongo')
 
-exports.run = (client, message, args) => {
-    db.UserModel.findOne({ discord_id: message.author.id }, (error, user) => {
-        if (error) throw error
-
-        console.log(user)
+exports.run = async(client, message, args) => {
+    var mention = message.mentions.users.first()
+    if(!mention){
+        db.UserModel.findOne({ discord_id: message.author.id }, (error, user) => {
+            if (error) throw error
+            console.log(user)
+            if (user) {
+                message.channel.send(`You currently have ${user.points} helper point(s).`)
+            } else {
+                message.channel.send(`You currently have 0 points.`)
+            }
+        })
+    }else{
+        var user = await db.UserModel.findOne({discord_id:mention.id})
         if (user) {
-            message.channel.send(`You currently have ${user.points} helper point(s).`)
+            message.channel.send(`${user} currently has ${user.points} helper point(s).`)
         } else {
-            message.channel.send(`You currently have 0 points.`)
+            message.channel.send(`${user} currently has 0 helper point(s).`)
         }
-    })
+    }
 }
 
 exports.help = 'Just an example command. Usage: `${process.env.BOT_PREFIX}example`'
