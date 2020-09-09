@@ -44,3 +44,4 @@ client.on('warn', (err) => console.warn(err))
 
 // Catch and report UnhandledPromiseRejectionWarnings.
 process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error))
+module.exports = client
