@@ -1,4 +1,4 @@
-le.logconst db = require('../mongo')
+const db = require('../mongo')
 
 exports.run = async (client, message, args) => {
     var mention = message.mentions.users.first()
