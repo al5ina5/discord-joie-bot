@@ -62,11 +62,11 @@ exports.run = (client, message) => {
                         collector.stop()
                     })
 
-                    collector.on('end', (collected) => {
-                        if (!collected.size) {
-                            message.channel.send('done.')
-                        }
-                    })
+                    // collector.on('end', (collected) => {
+                    //     if (!collected.size) {
+                    //         message.channel.send('done.')
+                    //     }
+                    // })
                 })
 
             }
