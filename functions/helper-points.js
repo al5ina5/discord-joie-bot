@@ -53,7 +53,7 @@ exports.run = (client, message) => {
 
                             var embed = new Discord.MessageEmbed()
                                 .setDescription(`${mention} has been granted a helper point for being helpful!`)
-                                .setFooter('Pro-tip: Use +points to check your points.', client.user.avatarURL());
+                                .setFooter(`Pro-tip: Use ${process.env.BOT_PREFIX}points to check your points.`, client.user.avatarURL());
 
                             sentEmbed.edit(embed)
                             grantPoints(mention)
