@@ -1,9 +1,15 @@
+var helperPoints = require('../functions/helper-points')
+
 module.exports = (client, message) => {
     if (message.author.bot) return
+
+    helperPoints.run(client, message)
+
     if (!message.content.startsWith(process.env.BOT_PREFIX)) return
-    
+
     var cmd = message.content.toLowerCase().trim()
     var args = cmd.split(' ')
+
 
     try {
         for (var i in client.commands) {
