@@ -17,7 +17,7 @@ exports.run = async(client, message, args) => {
         if (user) {
             message.channel.send(`${user} currently has ${user.points} helper point(s).`)
         } else {
-            message.channel.send(`You currently have 0 points.`)
+            message.channel.send(`${user} currently has 0 helper point(s).`)
         }
     }
 }
