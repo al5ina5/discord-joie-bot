@@ -21,5 +21,5 @@ exports.run = async (client, message, args) => {
     }
 }
 
-exports.help = 'Just an example command. Usage: `${process.env.BOT_PREFIX}example`'
+exports.help = 'Displays a users helper points.'
 exports.aliases = ['test', 'admin']
