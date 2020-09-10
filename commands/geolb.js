@@ -28,3 +28,5 @@ exports.run = async (client, message, args) => {
   
       message.channel.send(embed);   
 }
+exports.help = "Displays a list of countries where the members come from"
+exports.aliases = "glb"  
