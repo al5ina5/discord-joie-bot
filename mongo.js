@@ -9,6 +9,10 @@ mongoose.connect(process.env.MONGODB, {
 
 exports.UserModel = mongoose.model('UserModel', mongoose.Schema({
     discord_id: String,
+    country: {
+        type: String,
+        default: 'EARTH'
+    },
     points: {
         type: Number,
         default: 1
