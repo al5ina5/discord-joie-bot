@@ -1,6 +1,10 @@
-const fs = require('fs');
+let countries = require('../data/country-list.json')
 
-let rawdata = fs.readFileSync('./data/country-list.json');
-let countries = JSON.parse(rawdata);
+exports.get     = (country)    => countries.find(x => x.name.toLowerCase().replace(/\s/g,'') == country.toLowerCase() || x.code.toLowerCase()  == country.toLowerCase());
 
-exports.get = (country) => countries.find(x => x.name.toLowerCase().replace(/\s/g,'') == country.toLowerCase() || x.code.toLowerCase()  == country.toLowerCase());
+exports.getFlag = (countryObj) =>  {
+    if(countryObj.code == "EARTH")
+        return ':earth_americas:'
+    else
+        return `:flag_${countryObj.code.toLowerCase()}:`
+}
