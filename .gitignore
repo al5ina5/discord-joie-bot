@@ -2,4 +2,5 @@
 bot-settings.json
 .env
 node_modules
+package-lock.json
 *.log
