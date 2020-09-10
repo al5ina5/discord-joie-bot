@@ -1,4 +1,4 @@
-exports.run = (client, message, args) => {
+exports.run = (client, message, args, aliases) => {
     var searched = args[1]
 
     // If nothing is searched...
@@ -25,7 +25,7 @@ exports.run = (client, message, args) => {
         return
     }
 
-    message.channel.send(client.commands[searched].help)
+    message.channel.send(client.commands[searched, aliases].help)
     // message.channel.send(`\`${process.env.BOT_PREFIX}${searched}\` — ${client.commands[searched].help}`)
 }
 
