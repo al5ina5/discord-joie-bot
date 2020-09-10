@@ -15,5 +15,5 @@ exports.run = async (client, message, args) => {
         });
     }else message.channel.send(`Never heard of that country. Sorry.`)
 }
-exports.help = `Where are you from?`` Use this command to define the country you're from! \r\n **Usage:**\`${process.env.BOT_PREFIX} [your_country_here]`
-exports.aliases = "setctry"  
+exports.help = `Where are you from?`` Use this command to define the country you're from!.`
+exports.aliases = ["setctry"]
