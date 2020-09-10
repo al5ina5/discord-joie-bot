@@ -19,18 +19,18 @@ exports.run = async (client, message, args) => {
           if (member === "User Left") {
             embed.addField(`${i + 1}. ${member}`, `**Points**: ${users[i].points}`);
           } else {
-            embed.addField(`${i + 1}. @${member.user.tag}`, `**Points**: ${users[i].points}`);
+            embed.addField(`${i + 1}. @${member.user.username}`, `**Points**: ${users[i].points}`);
           }
         }
       } else {
         //more than 10 results
         embed.setColor("BLUE");
         for (i = 0; i < 10; i++) {
-          let member = message.guild.members.cache.get(users[i].points) || "User Left"
+          let member = message.guild.members.cache.get(users[i].discord_id) || "User Left"
           if (member === "User Left") {
             embed.addField(`${i + 1}. ${member}`, `**Points**: ${users[i].points}`);
           } else {
-            embed.addField(`${i + 1}. @${member.user.tag}`, `**Points**: ${users[i].points}`);
+            embed.addField(`${i + 1}. @${member.user.username}`, `**Points**: ${users[i].points}`);
           }
         }
       }
