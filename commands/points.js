@@ -21,5 +21,5 @@ exports.run = async (client, message, args) => {
     }
 }
 
-exports.help = 'Displays a users helper points.'
-exports.aliases = ['test', 'admin']
+exports.help = "Check how many helper points you've been granted."
+exports.aliases = ['pts']

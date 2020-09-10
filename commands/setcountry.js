@@ -15,3 +15,5 @@ exports.run = async (client, message, args) => {
         });
     }else message.channel.send(`Never heard of that country. Sorry.`)
 }
+exports.help = `Where are you from?`` Use this command to define the country you're from!.`
+exports.aliases = ["setctry"]
