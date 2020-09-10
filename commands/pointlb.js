@@ -1,6 +1,7 @@
 const db = require('../mongo')
 const Discord = require('discord.js')
 const client = require('../bot')
+const { user } = require('../bot')
 
 
 exports.run = async (client, message, args) => {
