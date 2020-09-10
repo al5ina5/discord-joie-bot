@@ -11,8 +11,7 @@ exports.run = async (client, message, args) => {
             } 
         },{ "$sort": { "points": -1 } },
     ])
-    countryCount = countryCount.sort({'points':'desc'})
-    console.log(countryCount)
+    
     let embed = new Discord.MessageEmbed().setTitle("Where are the members from?")
 
       if (countryCount.length === 0) {

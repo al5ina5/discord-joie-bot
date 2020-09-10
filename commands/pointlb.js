@@ -1,10 +1,12 @@
 const db = require('../mongo')
 const Discord = require('discord.js')
 const client = require('../bot')
+const { user } = require('../bot')
 
 
 exports.run = async (client, message, args) => {
     var users = await db.UserModel.find({}).sort([['points',-1]])
+    console.log(users)
     let embed = new Discord.MessageEmbed()
         .setTitle("Helpers Leaderboard")
       //if there are no results
