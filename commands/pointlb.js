@@ -40,5 +40,5 @@ exports.run = async (client, message, args) => {
     
 }
 
-exports.help = 'Displays more information on a specific command.'
-exports.aliases = ['details']
+exports.help = 'Displays the rank of the most helpful members.'
+exports.aliases = ['ptlb'] 
