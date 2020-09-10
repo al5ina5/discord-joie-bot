@@ -16,7 +16,8 @@ var getById = exports.getById = (id, callback) => {
 };
 
 var setCountry = exports.setCountry = (id, country, callback) => {  
-    db.UserModel.findOneAndUpdate({ discord_id: id }, {country: country.code}, {new: true, upsert: true }, (error,user)=>{
+    
+    db.UserModel.findOneAndUpdate({ discord_id: id }, {country: country.code}, {new: true, upsert: true,setDefaultsOnInsert:true }, (error,user)=>{
         if(callback) callback(user);
     });
 };

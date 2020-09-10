@@ -3,7 +3,7 @@ const countries   = require('../functions/helper-country')
 
 exports.run = async (client, message, args) => {
     var country = args[args.length - 1];
-    var discordUser = message.mentions.users.first() ?? message.author;
+    var discordUser = message.mentions.users.first() || message.author;
     var countryObj = countries.get(country);
 
     if(countryObj){
