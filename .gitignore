@@ -2,3 +2,4 @@
 bot-settings.json
 .env
 node_modules
+*.log

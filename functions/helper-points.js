@@ -49,7 +49,6 @@ exports.run = (client, message) => {
 
                     collector.on('collect', collected => {
                         if (collected.emoji.name === '👍') {
-                            console.log(client.user.avatarURL())
 
                             var embed = new Discord.MessageEmbed()
                                 .setDescription(`${mention} has been granted a helper point for being helpful!`)
@@ -62,11 +61,11 @@ exports.run = (client, message) => {
                         collector.stop()
                     })
 
-                    collector.on('end', (collected) => {
-                        if (!collected.size) {
-                            message.channel.send('done.')
-                        }
-                    })
+                    // collector.on('end', (collected) => {
+                    //     if (!collected.size) {
+                    //         message.channel.send('done.')
+                    //     }
+                    // })
                 })
 
             }
