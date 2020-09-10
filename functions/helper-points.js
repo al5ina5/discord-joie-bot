@@ -13,6 +13,7 @@ function grantPoints(mention) {
             }, (error) => {
                 if (error) throw error
             })
+            
         } else {
             const user = new db.UserModel({
                 discord_id: mention.id
