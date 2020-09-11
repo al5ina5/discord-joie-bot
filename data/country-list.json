@@ -109,11 +109,11 @@
     },
     {
       "code": "BO",
-      "name": "Bolivia, Plurinational State of"
+      "name": "Bolivia"
     },
     {
       "code": "BQ",
-      "name": "Bonaire, Sint Eustatius and Saba"
+      "name": "Bonaire"
     },
     {
       "code": "BA",
@@ -209,7 +209,7 @@
     },
     {
       "code": "CD",
-      "name": "Congo, the Democratic Republic of the"
+      "name": "The Democratic Republic of the Congo"
     },
     {
       "code": "CK",
@@ -289,7 +289,7 @@
     },
     {
       "code": "FK",
-      "name": "Falkland Islands (Malvinas)"
+      "name": "Falkland Islands"
     },
     {
       "code": "FO",
@@ -393,7 +393,7 @@
     },
     {
       "code": "VA",
-      "name": "Holy See (Vatican City State)"
+      "name": "Vatican City"
     },
     {
       "code": "HN",
@@ -421,7 +421,7 @@
     },
     {
       "code": "IR",
-      "name": "Iran, Islamic Republic of"
+      "name": "Iran"
     },
     {
       "code": "IQ",
@@ -473,11 +473,11 @@
     },
     {
       "code": "KP",
-      "name": "Korea, Democratic People's Republic of"
+      "name": "North Korea"
     },
     {
       "code": "KR",
-      "name": "Korea, Republic of"
+      "name": "South Korea"
     },
     {
       "code": "KW",
@@ -489,7 +489,7 @@
     },
     {
       "code": "LA",
-      "name": "Lao People's Democratic Republic"
+      "name": "Laos"
     },
     {
       "code": "LV",
@@ -529,7 +529,7 @@
     },
     {
       "code": "MK",
-      "name": "Macedonia, the Former Yugoslav Republic of"
+      "name": "Macedonia"
     },
     {
       "code": "MG",
@@ -581,11 +581,11 @@
     },
     {
       "code": "FM",
-      "name": "Micronesia, Federated States of"
+      "name": "Micronesia"
     },
     {
       "code": "MD",
-      "name": "Moldova, Republic of"
+      "name": "Moldova"
     },
     {
       "code": "MC",
@@ -681,7 +681,7 @@
     },
     {
       "code": "PS",
-      "name": "Palestine, State of"
+      "name": "Palestine"
     },
     {
       "code": "PA",
@@ -757,7 +757,7 @@
     },
     {
       "code": "MF",
-      "name": "Saint Martin (French part)"
+      "name": "Saint Martin"
     },
     {
       "code": "PM",
@@ -805,7 +805,7 @@
     },
     {
       "code": "SX",
-      "name": "Sint Maarten (Dutch part)"
+      "name": "Sint Maarten"
     },
     {
       "code": "SK",
@@ -873,7 +873,7 @@
     },
     {
       "code": "TW",
-      "name": "Taiwan, Province of China"
+      "name": "Taiwan"
     },
     {
       "code": "TJ",
@@ -881,7 +881,7 @@
     },
     {
       "code": "TZ",
-      "name": "Tanzania, United Republic of"
+      "name": "Tanzania"
     },
     {
       "code": "TH",
@@ -965,7 +965,7 @@
     },
     {
       "code": "VE",
-      "name": "Venezuela, Bolivarian Republic of"
+      "name": "Venezuela"
     },
     {
       "code": "VN",
@@ -973,11 +973,11 @@
     },
     {
       "code": "VG",
-      "name": "Virgin Islands, British"
+      "name": "British Virgin Islands"
     },
     {
       "code": "VI",
-      "name": "Virgin Islands, U.S."
+      "name": "Virgin Islands"
     },
     {
       "code": "WF",

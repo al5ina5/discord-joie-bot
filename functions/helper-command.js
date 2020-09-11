@@ -22,7 +22,7 @@ exports.embedMessage = (message, text) => {
 
 exports.sendHelp = (message, commandObj) => {
     let embed = new Discord.MessageEmbed()
-    embed.setTitle('Command Helper :desktop::');
+    embed.setTitle('Command Helper :desktop:');
     embed.setColor("BLUE");
     let commandHead = process.env.BOT_PREFIX + commandObj.commandName
     for (i = 0; i < commandObj.options.length; i++) { 

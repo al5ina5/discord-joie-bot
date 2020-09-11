@@ -6,6 +6,7 @@ const Discord = require('discord.js')
 
 exports.run = async (client, message, args) => {
     let arg1 = command.getFirstOption(args);
+
     let option;
     for (i = 0; i < countryCommand.options.length; i++)
     {
@@ -15,28 +16,28 @@ exports.run = async (client, message, args) => {
             break
         }
     }
-    if(option) option.handler(message, args)
-    else handleEmpty(message, args, countryCommand)
+    if(option) option.handler(message, args, client, countryCommand)
+    else handleEmpty(message, args, client, countryCommand)
 }
  
-const handleEmpty = (message, args, ecommand) => {
+const handleEmpty = (message, args, client, ecommand) => {
     if(args.length > 1){
         let discordUser = message.mentions.users.first();
         if (discordUser)
-            handleFrom(message, args);
+            handleFrom(message, args, client);
         else
-            handleSet(message, args);
+            handleWho(message, args, client);
     }
     else{
-        handleHelp(message, ecommand);
+        handleHelp(message, args, client, ecommand);
     }
 }
 
-const handleHelp  = (message, ecommand) => {
+const handleHelp  = (message, args, client, ecommand) => {
     command.sendHelp(message, ecommand);
 }
 
-const handleSet   = (message, args) => {
+const handleSet   = (message, args, client) => {
     var country = args[args.length - 1];
     var discordUser = message.mentions.users.first() || message.author;
     var countryObj = countries.get(country);
@@ -51,11 +52,26 @@ const handleSet   = (message, args) => {
     }else command.embedMessage(message, [`Never heard of that country. Sorry.`])
 }
 
-const handleWho   = (message, args) => {
-    command.notYetImplemented(message);
+const handleWho  = (message, args, client) => {
+    var country = args[args.length - 1];
+    var countryObj = countries.get(country);
+    if(countryObj){
+        let names = []; 
+        userService.getByCountry(countryObj.code, async (users) => {    
+            await users.forEach( async element => {
+                await client.users.fetch(element.discord_id).then((user) =>{
+                    names.push(`@${user.username}`)
+                })
+            });
+            if(names.length > 0)
+                command.embedMessage(message, [`The following devs are from ${countryObj.name} ${countries.getFlag(countryObj)}: ${names.join(', ')}`]);
+            else
+                command.embedMessage(message, [`No one is from ${countryObj.name} ${countries.getFlag(countryObj)}, maybe you should invite someone from that country! `]);
+        });
+    }else command.embedMessage(message, [`Never heard of that country. Sorry.`]);
 }
 
-const handleFrom  = (message, args) => {
+const handleFrom  = (message, args, client) => {
     let discordUser = message.mentions.users.first()
     userService.getById(discordUser.id, (user) =>{
         let countryObj = countries.get(user.country);
@@ -63,11 +79,7 @@ const handleFrom  = (message, args) => {
     })
 }
 
-const handleList  = (message, args) => {
-    command.notYetImplemented(message);
-}
-
-const handleStat  = async (message, args) => {
+const handleStat  = async (message, args, client) => {
     var countryCount = await db.UserModel.aggregate([
         {
             $group: {
@@ -76,20 +88,36 @@ const handleStat  = async (message, args) => {
             } 
         },{ "$sort": { "points": -1 } },
     ])
-   
-    let embed = new Discord.MessageEmbed().setTitle("Where are the members from?")
-      if (countryCount.length === 0) {
+
+    let embed = new Discord.MessageEmbed().setTitle("Where are the devs from?")
+    if (countryCount.length === 0) {
         embed.setColor("RED");
-        embed.addField("There seems to be no members here :(")
-      } else {
+        embed.addField("There seems to be no users here :(")
+    } else 
+    {
         embed.setColor("BLUE");
+
+        //create new earth object because the count is excludes all users that aren't in the db
+        let earthI = countryCount.findIndex(x=>x._id == "EARTH")
+        let earthObj = {_id: "EARTH", points: message.guild.members.cache.size}
+        if(earthI != -1){
+            countryCount.splice(earthI, 1);
+        }
+
+        var totalAssigned = countryCount.reduce(function(prev, cur) {
+            return prev + cur.points;
+        }, 0);
+
+        earthObj.points = earthObj.points - totalAssigned;
+        countryCount.push(earthObj);
+
         for (i = 0; i < countryCount.length; i++) {
             var country = countries.get(countryCount[i]._id); 
             embed.addField(`${i + 1}. ${countries.getFlag(country)} ${country.name}`, `**Members**: ${countryCount[i].points}`);      
-        }
-      }
-  
-      message.channel.send(embed);   
+         }
+    }
+
+    message.channel.send(embed);   
 }
 
 
@@ -99,7 +127,7 @@ let countryCommand = {
     options: [{
          aliases: [''],
          description: "If {mention}, will let you know where the user is from. If {country}, will return a list of users from said country.",
-         params: '{mention | country string | country code | flag emoji} ',
+         params: '{mention | country string | country code} ',
          supportSpaces: true,
          handler: handleEmpty
      },
@@ -112,7 +140,7 @@ let countryCommand = {
      {
          aliases: ['whofrom'],
          description: "Will let you know where the user is from.",
-         params: '{country string | country code | flag emoji}',
+         params: '{country string | country code}',
          supportSpaces: true,
          handler: handleWho
      },
@@ -123,21 +151,15 @@ let countryCommand = {
          handler: handleFrom
      },
      {
-         aliases: ['stats', 'lb', 'stat', 'geolb', 'geo'],
-         description: "Will return a board with a sum of members per country.",
+         aliases: ['stats', 'lb', 'stat', 'geolb', 'geo', 'glb'],
+         description: "Will displays a list of countries where the members come from.",
          params: '',
          handler: handleStat
      },
      {
-         aliases: ['list', 'ls'],
-         description: "Will return a list of countries and codes.",
-         params: '',
-         handler: handleList
-     },
-     {
-         aliases: ['set'],
-         description: "Will set your country.",
-         params: '{country string | country code | flag emoji}',
+         aliases: ['set', 'setctry'],
+         description: "Use this command to define the country you're from!",
+         params: '{country string | country code}',
          supportSpaces: true,
          handler: handleSet
      }]
