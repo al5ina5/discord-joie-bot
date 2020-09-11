@@ -3,7 +3,8 @@ exports.run = (client, message, args) => {
 
     // If nothing is searched...
     if (!searched) {
-        message.channel.send(`Use \`${process.env.BOT_PREFIX}commands\` to view a list of commands. Use \`${process.env.BOT_PREFIX}help [command]\` to view more information on a specific command.`)
+        message.channel.send(`Use \`${process.env.BOT_PREFIX}help [command]\` to view more information on a specific command.`)
+        client.commands.commands.run(client, message, args)
         return
     }
 
