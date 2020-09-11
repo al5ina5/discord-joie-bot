@@ -26,7 +26,11 @@ exports.sendHelp = (message, commandObj) => {
     embed.setColor("BLUE");
     let commandHead = process.env.BOT_PREFIX + commandObj.commandName
     for (i = 0; i < commandObj.options.length; i++) { 
+        
         option = commandObj.options[i];
+        if(option.hide)
+            continue;
+        
         alias =  option.aliases[0];
         if(alias == '')
         {
