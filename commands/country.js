@@ -134,12 +134,14 @@ let countryCommand = {
      {
          aliases: ['help', 'halp'],
          description: "Will return a list of possible commands.",
+         hide: true,
          params: '',
          handler: handleHelp
      },
      {
          aliases: ['whofrom'],
          description: "Will let you know where the user is from.",
+         hide: true,
          params: '{country string | country code}',
          supportSpaces: true,
          handler: handleWho
@@ -147,6 +149,7 @@ let countryCommand = {
      {
          aliases: ['fromwhere'],
          description: "Will return a list of users from given country.",
+         hide: true,
          params: '[mention]',
          handler: handleFrom
      },
