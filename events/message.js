@@ -8,8 +8,7 @@ module.exports = (client, message) => {
     if (!message.content.startsWith(process.env.BOT_PREFIX)) return
 
     var cmd = message.content.toLowerCase().trim()
-    var args = cmd.split(' ')
-
+    var args = cmd.split('\\s+')
 
     try {
         for (var i in client.commands) {
