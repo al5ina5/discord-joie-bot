@@ -15,8 +15,16 @@ var getById = exports.getById = (id, callback) => {
     })
 };
 
-var setCountry = exports.setCountry = (id, country, callback) => {  
-    
+var getByCountry = exports.getByCountry = (countryCode, callback) => { 
+    db.UserModel.find({
+        country: countryCode
+    }, function (error, users) {
+        if(error) throw error;
+        callback(users);
+    })
+};
+
+var setCountry = exports.setCountry = (id, country, callback) => {   
     db.UserModel.findOneAndUpdate({ discord_id: id }, {country: country.code}, {new: true, upsert: true,setDefaultsOnInsert:true }, (error,user)=>{
         if(callback) callback(user);
     });
