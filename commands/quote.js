@@ -12,7 +12,7 @@ exports.run = (client, message, args) => {
             axios.get('https://type.fit/api/quotes')
                 .then(function (response) {
                     let quote_data = response.data[dd];
-                    message.channel.send(hp.embedded_message(quote_data.author,quote_data.text));
+                    message.channel.send(hp.embedded_message((quote_data.author) ? quote_data.author : 'Quote of the Day: ',quote_data.text));
                 })
                 .catch(function (error) {
                     console.log(error);
