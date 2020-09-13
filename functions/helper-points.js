@@ -13,7 +13,7 @@ function grantPoints(mention) {
             }, (error) => {
                 if (error) throw error
             })
-            
+
         } else {
             const user = new db.UserModel({
                 discord_id: mention.id
@@ -60,6 +60,12 @@ exports.run = (client, message) => {
                         }
 
                         collector.stop()
+                    })
+
+                    collector.on('end', collected => {
+                        setTimeout(() => {
+                            sentEmbed.delete()
+                        }, 3000)
                     })
 
                     // collector.on('end', (collected) => {
