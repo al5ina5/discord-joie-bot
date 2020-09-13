@@ -1,9 +1,10 @@
 const db = require('../mongo')
 
 exports.run = async (client, message, args) => {
+    let role = message.guild.roles.find(r => r.name === "Helpful Angel");
     var mention = message.mentions.users.first()
     if (!mention) {
-        db.UserModel.findOne({ discord_id: message.author.id }, (error, user) => {
+        await db.UserModel.findOne({ discord_id: message.author.id }, (error, user) => {
             if (error) throw error
             if (user) {
                 message.channel.send(`You currently have ${user.points} helper point(s).`)
@@ -17,6 +18,10 @@ exports.run = async (client, message, args) => {
             message.channel.send(`${mention} currently has ${user.points} helper point(s).`)
         } else {
             message.channel.send(`${mention} currently has 0 helper point(s).`)
+        }
+        if(user.points === 4){
+            mention.roles.add(role)
+            console.log(mentions.roles)
         }
     }
 }
