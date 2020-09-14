@@ -10,6 +10,12 @@ exports.notYetImplemented = (message) => {
     embed.setDescription(`:construction: Not implemented yet. Sorry.`);      
     message.channel.send(embed);   
 }
+exports.alert = (message, msg) => {
+    let embed = new Discord.MessageEmbed()
+    embed.setColor("RED");
+    embed.setDescription(`:rotating_light: ${msg}`);      
+    message.channel.send(embed);   
+}
 
 exports.embedMessage = (message, text) => {
     let embed = new Discord.MessageEmbed()
@@ -22,7 +28,7 @@ exports.embedMessage = (message, text) => {
 
 exports.sendHelp = (message, commandObj) => {
     let embed = new Discord.MessageEmbed()
-    embed.setTitle('Command Helper :desktop:');
+    embed.setTitle(':desktop: Command Helper');
     embed.setColor("BLUE");
     let commandHead = process.env.BOT_PREFIX + commandObj.commandName
     for (i = 0; i < commandObj.options.length; i++) { 

@@ -36,9 +36,24 @@ const handleHelp = (message, args, client, ecommand) => {
 }
 
 const handleSet = (message, args, client) => {
+
     var country = args[args.length - 1];
     var discordUser = message.mentions.users.first() || message.author;
     var countryObj = countries.get(country);
+
+    //message.guild.roles.cache.forEach(role => console.log(role.name, role.id));
+    let mention = message.mentions.users.first()
+    if(mention)
+    {
+        //gotta be a better way than using strings like this
+        if (message.member.roles.cache.some(role => role.name === 'admin' || role.name === 'community contributor'  )) {
+            discordUser = mention;
+        }else
+        {
+            command.alert(message, `You don't have the permission to set another user's country.`)
+            return;
+        }
+    }
 
     if (countryObj) {
         userService.setCountry(discordUser.id, countryObj, (user) => {
