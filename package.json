@@ -12,11 +12,11 @@
   "author": "Sebastian Alsina",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.20.0",
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
     "fs": "0.0.1-security",
-    "mongoose": "^5.10.4",
-    "node-libcurl": "^2.2.0"
+    "mongoose": "^5.10.4"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"
