@@ -43,15 +43,17 @@ const handleAdd = async(message, args, client) => {
     let technology = args[args.length - 1];
     let embed = new Discord.MessageEmbed()
 
-    if(technology === "+add" || technology ===  "+save"){
+    if(technology === "+add" || technology === "+save"){
         embed.setColor("RED");
-        embed.setDescription("Did you just try to add nothing to your tech stack you silly human :(")
+        embed.setDescription("No params given to add :(")
+        message.channel.send(embed)
         return;
 
     }
     if(mentionedUser){
         embed.setColor("RED");
         embed.setDescription("You cannot add technologies to someone else's tech stack :)")
+        message.channel.send(embed)
         return;
 
     }
