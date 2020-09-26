@@ -5,6 +5,7 @@ const { user } = require('../bot')
 
 
 exports.run = async (client, message, args) => {
+    
     var users = await db.UserModel.find({}).sort([['points',-1]])
     let embed = new Discord.MessageEmbed()
         .setTitle("Helpers Leaderboard")

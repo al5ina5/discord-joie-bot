@@ -16,5 +16,8 @@ exports.UserModel = mongoose.model('UserModel', mongoose.Schema({
     points: {
         type: Number,
         default: 1
-    }
+    },
+    techStack: Array
 }))
+
+
