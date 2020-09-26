@@ -1,22 +1,22 @@
 const hp = require('../functions/helper-nexus');
-const quote_lib = require('../data/quote-lib');
-const { curly, Curl } = require('node-libcurl');
+const quote_lib = require('../libraries/quote-lib');
+const axios = require('axios');
 
 exports.run = (client, message, args) => {
     let argument = (typeof args[1] === 'undefined') ? 'random' : args[1];
+    console.log('Color:' + hp.getRandomColor());
     switch (argument) {
         case 'today':
-            const curl = new Curl();
-            curl.setOpt('URL', 'https://quotes.rest/qod?language=en');
-            curl.setOpt('FOLLOWLOCATION', true);
-            curl.on('end', function (statusCode, data, headers) {
-                data = JSON.parse(data);
-                let quote_data = data.contents.quotes[0];
-                message.channel.send(hp.embedded_message(quote_data.title, quote_data.quote, '', '', [], '', quote_data.author));
-                this.close();
-            });
-            curl.on('error', () => { curl.close.bind(curl); });
-            curl.perform();
+            let today = new Date();
+            let dd = String(today.getDate()).padStart(2, '0');
+            axios.get('https://type.fit/api/quotes')
+                .then(function (response) {
+                    let quote_data = response.data[dd];
+                    message.channel.send(hp.embedded_message((quote_data.author) ? quote_data.author : 'Quote of the Day: ', quote_data.text));
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
             break;
         default:
             let quote = quote_lib[hp.getRandomInt(0, quote_lib.length)];
@@ -24,3 +24,5 @@ exports.run = (client, message, args) => {
     }
 
 };
+
+exports.help = "Display the Quote";
