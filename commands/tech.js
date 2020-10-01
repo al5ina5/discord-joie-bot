@@ -39,8 +39,25 @@ const handleHelp = (message, args, client, ecommand) => {
 const handleAdd = async(message, args, client) => {
     const discordUser = message.author
     const mentionedUser = message.mentions.users.first()
-    const user = await techService.getById(discordUser.id)
     let technology = args[args.length - 1];
+    var user = await db.UserModel.findOne({discord_id:discordUser.id})
+    if(user.techStack.includes(technology.toLowerCase())){
+
+        embed.setColor("RED");
+        embed.setDescription(`${technology} is already on your tech stack`)
+        message.channel.send(embed)
+        return;
+
+    }   
+    if(!user){
+       user = new db.UserModel({
+           discord_id:discordUser.id,
+           points:0,
+           techStack:[technology]
+       }) 
+       await user.save()
+    }
+
     let embed = new Discord.MessageEmbed()
 
     if(technology === "+add" || technology === "+save"){
@@ -58,14 +75,7 @@ const handleAdd = async(message, args, client) => {
 
     }
 
-    if(user.techStack.includes(technology.toLowerCase())){
-
-        embed.setColor("RED");
-        embed.setDescription(`${technology} is already on your tech stack`)
-        message.channel.send(embed)
-        return;
-
-    }   
+    
 
    
     await techService.addTechnology(discordUser.id,technology)
