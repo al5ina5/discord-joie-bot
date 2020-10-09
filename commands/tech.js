@@ -1,9 +1,9 @@
-const userService = require('../services/service-user')
-const techService = require('../services/service-tech')
-const countries = require('../functions/helper-country')
-const command = require('../functions/helper-command')
-const db = require('../mongo')
-const Discord = require('discord.js')
+const userService = require('../services/service-user');
+const techService = require('../services/service-tech');
+const countries = require('../functions/helper-country');
+const command = require('../functions/helper-command');
+const db = require('../mongo');
+const Discord = require('discord.js');
 
 exports.run = async (client, message, args) => {
     let arg1 = command.getFirstOption(args);
@@ -17,7 +17,7 @@ exports.run = async (client, message, args) => {
     }
     if (option) option.handler(message, args, client, techCommands)
     else handleEmpty(message, args, client, techCommands)
-}
+};
 
 const handleEmpty = (message, args, client, ecommand) => {
     if (args.length > 1) {
@@ -30,50 +30,48 @@ const handleEmpty = (message, args, client, ecommand) => {
     else {
         handleHelp(message, args, client, ecommand);
     }
-}
+};
 
 const handleHelp = (message, args, client, ecommand) => {
     command.sendHelp(message, ecommand);
-}
+};
 
 const handleAdd = async(message, args, client) => {
-    const discordUser = message.author
-    const mentionedUser = message.mentions.users.first()
-    const user = await techService.getById(discordUser.id)
-    let technology = args[args.length - 1];
-    let embed = new Discord.MessageEmbed()
+    const discordUser = message.author;
+    const mentionedUser = message.mentions.users.first();
+    const user = await techService.getById(discordUser.id);
+    let embed = new Discord.MessageEmbed();
+    let technologies = command.getAllTechnologyValues(args);
+    let intersectingTechnologies = command.userIntersectingTech(user, technologies);
+    let newTechnologies = technologies.join(', ');
+    let successSentence = technologies.length !== 1 ? 'are' : 'is';
 
-    if(technology === "+add" || technology === "+save"){
+    if (technologies.indexOf('+add') !== -1 || technologies.indexOf('+save') !== -1){
         embed.setColor("RED");
-        embed.setDescription("No params given to add :(")
-        message.channel.send(embed)
+        embed.setDescription("No params given to add :(");
+        await message.channel.send(embed);
         return;
-
     }
-    if(mentionedUser){
+
+    if (mentionedUser){
         embed.setColor("RED");
         embed.setDescription("You cannot add technologies to someone else's tech stack :)")
-        message.channel.send(embed)
+        await message.channel.send(embed);
         return;
-
     }
 
-    if(user.techStack.includes(technology.toLowerCase())){
-
+    if (intersectingTechnologies.length) {
         embed.setColor("RED");
-        embed.setDescription(`${technology} is already on your tech stack`)
-        message.channel.send(embed)
+        embed.setDescription(`${intersectingTechnologies.join(', ')} ${successSentence} already on your tech stack`);
+        await message.channel.send(embed);
         return;
+    }
 
-    }   
-
-   
-    await techService.addTechnology(discordUser.id,technology)
+    await techService.addTechnology(discordUser.id, technologies.map(item => item.toLowerCase()));
     embed.setColor("BLURPLE");
-    embed.setDescription(`${technology} is added to your tech stack.`)
-    message.channel.send(embed)
-
-}
+    embed.setDescription(`${newTechnologies} ${successSentence} added to your tech stack.`);
+    await message.channel.send(embed);
+};
 
 const handleSelf = async (message,args,client) => {
     const discordUser = message.author
@@ -98,7 +96,7 @@ const handleSelf = async (message,args,client) => {
         embed.setDescription(`**${des}**`)
     }
     message.channel.send(embed)
-}
+};
 
 const handleSearch = async (message,args,client) => {
     const discordUser = message.mentions.users.first()
@@ -151,7 +149,8 @@ const handleSearch = async (message,args,client) => {
         }
         message.channel.send(embed)
     }
-}
+};
+
 const handleDelete = async(message,args,client) => {
     const discordUser = message.author
     const user = await techService.getById(discordUser.id)
@@ -174,12 +173,7 @@ const handleDelete = async(message,args,client) => {
     await db.UserModel.updateOne( {discord_id: discordUser.id}, { $pullAll: {techStack: [technology.toLowerCase()] } } )
         embed.setColor("BLURPLE");
         embed.setDescription(`${technology} has been removed from your stack`)
-
-
-
-
-
-}
+};
 
 let techCommands = {
     commandName: 'tech',
@@ -200,8 +194,8 @@ let techCommands = {
     },
     {
         aliases: ['add','save'],
-        description: "Will add a new technology to your tech stack.",
-        params: '{techName}',
+        description: "Will add a new technology to your tech stack. You can add multiple values separated by `,`, `.` or `;`",
+        params: '{techNames}',
         supportSpaces: true,
         handler: handleAdd
     },
@@ -226,4 +220,4 @@ let techCommands = {
         supportSpaces: true,
         handler: handleSearch
     }]
-}
+};

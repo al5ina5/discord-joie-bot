@@ -46,3 +46,29 @@ exports.sendHelp = (message, commandObj) => {
     }   
     message.channel.send(embed);   
 }
+
+/**
+ * Get all non empty technologies separated by `,`, `.` or `;`
+ *
+ * @param args
+ *
+ * Returns filtered, non-empty passed technology name values
+ * @returns {string[]}
+ */
+exports.getAllTechnologyValues = (args) => {
+    return args.slice(2).join(' ').toString().trim().split(/\s*(?:[,.;]|$)\s*/).filter(Boolean);
+};
+
+/**
+ * Search for intersecting technologies in user
+ * Will return array of technologies user already has, or empty array
+ *
+ * @param user
+ * @param args
+ *
+ * Returns the array of technologies user already has, or empty array.
+ * @returns {Array}
+ */
+exports.userIntersectingTech = (user, args) => {
+    return args.filter(technology => user.techStack.includes(technology));
+};
