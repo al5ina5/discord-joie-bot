@@ -56,7 +56,7 @@ exports.sendHelp = (message, commandObj) => {
  * @returns {string[]}
  */
 exports.getAllTechnologyValues = (args) => {
-    return args.slice(2).join(' ').toString().trim().split(/\s*(?:[,.;]|$)\s*/).filter(Boolean);
+    return args.slice(2).join(' ').toString().trim().split(/\s*(?:[,;]|$)\s*/).filter(Boolean);
 };
 
 /**
