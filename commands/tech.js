@@ -39,8 +39,25 @@ const handleHelp = (message, args, client, ecommand) => {
 const handleAdd = async(message, args, client) => {
     const discordUser = message.author
     const mentionedUser = message.mentions.users.first()
-    const user = await techService.getById(discordUser.id)
     let technology = args[args.length - 1];
+    var user = await db.UserModel.findOne({discord_id:discordUser.id})
+    if(user.techStack.includes(technology.toLowerCase())){
+
+        embed.setColor("RED");
+        embed.setDescription(`${technology} is already on your tech stack`)
+        message.channel.send(embed)
+        return;
+
+    }   
+    if(!user){
+       user = new db.UserModel({
+           discord_id:discordUser.id,
+           points:0,
+           techStack:[technology]
+       }) 
+       await user.save()
+    }
+
     let embed = new Discord.MessageEmbed()
 
     if(technology === "+add" || technology === "+save"){
@@ -58,18 +75,12 @@ const handleAdd = async(message, args, client) => {
 
     }
 
-    if(user.techStack.includes(technology.toLowerCase())){
-
-        embed.setColor("RED");
-        embed.setDescription(`${technology} is already on your tech stack`)
-        message.channel.send(embed)
-        return;
-
-    }   
+    
 
    
     await techService.addTechnology(discordUser.id,technology)
     embed.setColor("BLURPLE");
+    technology = technology.charAt(0).toUpperCase() + technology.slice(1)
     embed.setDescription(`${technology} is added to your tech stack.`)
     message.channel.send(embed)
 
@@ -80,7 +91,7 @@ const handleSelf = async (message,args,client) => {
     const user = await techService.getById(discordUser.id)
     let des = ''
     let embed = new Discord.MessageEmbed()
-        .setTitle(`<@${message.author.username}> 's Stack`)
+        .setTitle(` @${message.author.tag} 's Stack`)
     const stack = user.techStack
     if(stack === []){
         embed.setColor("RED")
@@ -106,7 +117,7 @@ const handleSearch = async (message,args,client) => {
         const user = await techService.getById(discordUser.id)
         let des = ''
         let embed = new Discord.MessageEmbed()
-            .setTitle(`${discordUser.username}'s Stack`)
+            .setTitle(`@${discordUser.tag}'s Stack`)
         const stack = user.techStack
         console.log(user.techStack)
         if(user.techStack.length === 0){
@@ -143,7 +154,7 @@ const handleSearch = async (message,args,client) => {
             let index = 0
             users.forEach((user) => {
                 let member = message.guild.members.cache.get(users[index].discord_id)
-                des += `<@${user.discord_id}>`
+                des += `${user.discord_id}`
                 des += `\n`
                 index += 1
             })
@@ -172,9 +183,10 @@ const handleDelete = async(message,args,client) => {
     }
 
     await db.UserModel.updateOne( {discord_id: discordUser.id}, { $pullAll: {techStack: [technology.toLowerCase()] } } )
-        embed.setColor("BLURPLE");
+        embed.setColor("RED");
+        technology = technology.charAt(0).toUpperCase() + technology.slice(1)
         embed.setDescription(`${technology} has been removed from your stack`)
-
+        message.channel.send(embed)
 
 
 
