@@ -10,11 +10,7 @@ exports.run = async (client, message, args) => {
 
     let option
     for (i = 0; i < techCommands.options.length; i++) {
-        if (
-            techCommands.options[i].aliases.find(
-                (alias) => techCommands.optPrefix + alias === arg1
-            )
-        ) {
+        if (techCommands.options[i].aliases.find((alias) => techCommands.optPrefix + alias === arg1)) {
             option = techCommands.options[i]
             break
         }
@@ -40,8 +36,23 @@ const handleHelp = (message, args, client, ecommand) => {
 const handleAdd = async (message, args, client) => {
     const discordUser = message.author
     const mentionedUser = message.mentions.users.first()
-    const user = await techService.getById(discordUser.id)
     let technology = args[args.length - 1]
+    var user = await db.UserModel.findOne({ discord_id: discordUser.id })
+    if (user.techStack.includes(technology.toLowerCase())) {
+        embed.setColor('RED')
+        embed.setDescription(`${technology} is already on your tech stack`)
+        message.channel.send(embed)
+        return
+    }
+    if (!user) {
+        user = new db.UserModel({
+            discord_id: discordUser.id,
+            points: 0,
+            techStack: [technology]
+        })
+        await user.save()
+    }
+
     let embed = new Discord.MessageEmbed()
 
     if (technology === '+add' || technology === '+save') {
@@ -52,22 +63,14 @@ const handleAdd = async (message, args, client) => {
     }
     if (mentionedUser) {
         embed.setColor('RED')
-        embed.setDescription(
-            "You cannot add technologies to someone else's tech stack :)"
-        )
-        message.channel.send(embed)
-        return
-    }
-
-    if (user.techStack.includes(technology.toLowerCase())) {
-        embed.setColor('RED')
-        embed.setDescription(`${technology} is already on your tech stack`)
+        embed.setDescription("You cannot add technologies to someone else's tech stack :)")
         message.channel.send(embed)
         return
     }
 
     await techService.addTechnology(discordUser.id, technology)
     embed.setColor('BLURPLE')
+    technology = technology.charAt(0).toUpperCase() + technology.slice(1)
     embed.setDescription(`${technology} is added to your tech stack.`)
     message.channel.send(embed)
 }
@@ -76,9 +79,7 @@ const handleSelf = async (message, args, client) => {
     const discordUser = message.author
     const user = await techService.getById(discordUser.id)
     let des = ''
-    let embed = new Discord.MessageEmbed().setTitle(
-        `${message.author.tag}'s Stack`
-    )
+    let embed = new Discord.MessageEmbed().setTitle(` @${message.author.tag} 's Stack`)
     const stack = user.techStack
     if (stack === []) {
         embed.setColor('RED')
@@ -87,8 +88,7 @@ const handleSelf = async (message, args, client) => {
         embed.setColor('BLURPLE')
         stack.forEach((technology) => {
             if (technology != null) {
-                technology =
-                    technology.charAt(0).toUpperCase() + technology.slice(1)
+                technology = technology.charAt(0).toUpperCase() + technology.slice(1)
             }
             des += technology
             des += `\n`
@@ -103,24 +103,19 @@ const handleSearch = async (message, args, client) => {
     if (discordUser) {
         const user = await techService.getById(discordUser.id)
         let des = ''
-        let embed = new Discord.MessageEmbed().setTitle(
-            `${discordUser.username}'s Stack`
-        )
+        let embed = new Discord.MessageEmbed().setTitle(`@${discordUser.tag}'s Stack`)
         const stack = user.techStack
         console.log(user.techStack)
         if (user.techStack.length === 0) {
             embed.setColor('RED')
-            embed.setTitle(
-                `${discordUser.username} seems to have no technologies in their stack.`
-            )
+            embed.setTitle(`${discordUser.username} seems to have no technologies in their stack.`)
             message.channel.send(embed)
             return
         } else {
             embed.setColor('BLURPLE')
             stack.forEach((technology) => {
                 if (technology != null) {
-                    technology =
-                        technology.charAt(0).toUpperCase() + technology.slice(1)
+                    technology = technology.charAt(0).toUpperCase() + technology.slice(1)
                 }
                 des += technology
                 des += `\n`
@@ -144,10 +139,8 @@ const handleSearch = async (message, args, client) => {
             console.log(users)
             let index = 0
             users.forEach((user) => {
-                let member = message.guild.members.cache.get(
-                    users[index].discord_id
-                )
-                des += `<@${user.discord_id}>`
+                let member = message.guild.members.cache.get(users[index].discord_id)
+                des += `${user.discord_id}`
                 des += `\n`
                 index += 1
             })
@@ -165,16 +158,12 @@ const handleDelete = async (message, args, client) => {
     let technology = args[args.length - 1]
     if (technology === '+delete' || technology === '+remove') {
         embed.setColor('RED')
-        embed.setDescription(
-            'Did you just try to delete nothing from your tech stack you silly human :('
-        )
+        embed.setDescription('Did you just try to delete nothing from your tech stack you silly human :(')
         message.channel.send(embed)
         return
     } else if (!stack.includes(technology)) {
         embed.setColor('RED')
-        embed.setDescription(
-            `${technology} could not be deleted because it is not in your stack :(`
-        )
+        embed.setDescription(`${technology} could not be deleted because it is not in your stack :(`)
         message.channel.send(embed)
         return
     }
@@ -183,8 +172,10 @@ const handleDelete = async (message, args, client) => {
         { discord_id: discordUser.id },
         { $pullAll: { techStack: [technology.toLowerCase()] } }
     )
-    embed.setColor('BLURPLE')
+    embed.setColor('RED')
+    technology = technology.charAt(0).toUpperCase() + technology.slice(1)
     embed.setDescription(`${technology} has been removed from your stack`)
+    message.channel.send(embed)
 }
 
 let techCommands = {
