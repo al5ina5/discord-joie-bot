@@ -17,5 +17,8 @@ exports.UserModel = mongoose.model('UserModel', mongoose.Schema({
         type: Number,
         default: 1
     },
-    techStack: Array
+    techStack:{
+        type: Array,
+        default :[]
+    }
 }));
