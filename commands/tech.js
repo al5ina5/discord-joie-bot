@@ -140,7 +140,7 @@ const handleSearch = async (message, args, client) => {
             let index = 0
             users.forEach((user) => {
                 let member = message.guild.members.cache.get(users[index].discord_id)
-                des += `${user.discord_id}`
+                des += `${member}`
                 des += `\n`
                 index += 1
             })
