@@ -11,13 +11,13 @@ A boilerplate to quickly deploy a powerful Discord bots. Quickly and painlessly 
 - [x] Fully commented: Easy for a new developer to understand and navigate.
 - [x] Powerful command handler.
 - [x] Built in `!commands` and `!help` commands.
-- [x]Grant helper points to helpful people.
-- [x]Manage a helper leaderboard
-- [x]Tracks which country people are from.
-- [x]Provides an aggregate for countries.
-- [x]Keeps track of people's tech stack
-- [x]Allows search of people by what technology they use.
-- [x]Allows search of people's tech stack.
+- [x] Grant helper points to helpful people.
+- [x] Manage a helper leaderboard
+- [x] Tracks which country people are from.
+- [x] Provides an aggregate for countries.
+- [x] Keeps track of people's tech stack
+- [x] Allows search of people by what technology they use.
+- [x] Allows search of people's tech stack.
 
 # How-to / Setup
 
