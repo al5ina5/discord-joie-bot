@@ -7,7 +7,7 @@ const Discord = require('discord.js')
 
 exports.run = command.buildRunner(techCommands)
 
-const handleHelp = command.handleHelp
+exports.help = command.buildHelp(techCommands)
 
 const handleAdd = async (message, args, client) => {
     const discordUser = message.author
@@ -171,7 +171,7 @@ let techCommands = {
             description: 'Will return a list of possible commands.',
             hide: true,
             params: '',
-            handler: handleHelp
+            handler: exports.help
         },
         {
             aliases: ['add', 'save'],

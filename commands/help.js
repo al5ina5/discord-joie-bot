@@ -26,6 +26,11 @@ exports.run = (client, message, args) => {
         return
     }
 
+    if (typeof client.commands[searched].help === 'function') {
+        client.commands[searched].help(message)
+        return
+    }
+
     message.channel.send(client.commands[searched].help)
     // message.channel.send(`\`${process.env.BOT_PREFIX}${searched}\` — ${client.commands[searched].help}`)
 }

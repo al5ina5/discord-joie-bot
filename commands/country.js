@@ -6,7 +6,7 @@ const Discord = require('discord.js')
 
 exports.run = command.buildRunner(countryCommand)
 
-const handleHelp = command.handleHelp
+exports.help = command.buildHelp(countryCommand)
 
 const handleSet = (message, args, client) => {
 
@@ -121,7 +121,7 @@ let countryCommand = {
         description: "Will return a list of possible commands.",
         hide: true,
         params: '',
-        handler: handleHelp
+        handler: exports.help
     },
     {
         aliases: ['whofrom'],

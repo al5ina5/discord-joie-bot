@@ -71,6 +71,6 @@ exports.handleEmpty = (message, args, client, ecommand) => {
     }
 }
 
-exports.handleHelp = (message, args, client, ecommand) => {
-    exports.sendHelp(message, ecommand);
+exports.buildHelp = config => (message, args, client, ecommand) => {
+    exports.sendHelp(message, config)
 }
