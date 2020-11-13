@@ -24,24 +24,65 @@ A boilerplate to quickly deploy a powerful Discord bots. Quickly and painlessly 
 Prerequisites:
 
 - NodeJS installed on the machine.
-- Your Discord bot's token.
+- Mongodb
+  - Installed locally. [Guide here](https://docs.mongodb.com/manual/installation/)
+  - Or you can use free tier from [mlab](https://mlab.com/) or [mongodb](https://www.mongodb.com/cloud) itself.
+- Your Discord bot's token. (Create Discord bot [here](https://discord.com/developers/applications))
 - Your Discord bot invited to your server.
-- A brain.
+- A brain. 🧠
 
-1. Download/clone the repo.
-2. Duplicate `.env.sample` and rename it `.env`.
-3. Place your Discord bot's token in `.env`.
-4. Open a Terminal (Console) window, and navigate to your project by using `cd /path/to/this/repo`.
-5. Run `npm i` to download the dependencies.
-6. Run `node bot.js` to initiate the bot.
+## Steps to start coding 🚀
 
+### Fork the repository by clicking `Fork` button at top of this page.
 
+### Clone your repository.
+
+```bash
+git clone git@github.com:YOUR_USER:YOUR_FORK.git
+```
+
+### Open a terminal, and navigate to your project.
+
+```bash
+cd YOUR_FORK
+```
+
+### Copy `.env.example` file.
+
+```bash
+cp .env.example .env
+```
+
+### Setup your envinoment variables in `.env` file.
+
+### Install npm dependencies
+
+```bash
+npm install
+```
+
+### Start Coding 👨‍💻👩‍💻
+
+```bash
+npm run dev
+```
 
 # FAQ
 
 **How can I change the bot's prefix?**
 
 - The prefix is defined in the `.env` file.
+
+**How I can start contributing?**
+
+- Fork the project
+- Follow [How-to / Setup](#how-to--setup) to prepare everything you need
+- You are ready!
+
+**How I can use local mongodb ???**
+
+- Your local mongodb url will most likely look like this:
+  "`mongodb://127.0.0.1:27017/joie`". Where `27017` is default mongodb port and `joie` is your database name.
 
 **Does this bot moderation feature commands like `!purge`, `!kick`, and `!ban`?**
 
