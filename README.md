@@ -1,6 +1,6 @@
-# Discord Bot Boilerplate
+# Discord Joie Bot
 
-A boilerplate to quickly deploy a powerful Discord bots. Quickly and painlessly deploy a powerful, lightweight and extremely easy-to-manage Discord bot for both beginners and expert users. No experience needed.
+A powerful bot built by the [UNDER Web World discord server](https://discord.gg/AYNbcYsGyz) <add why>
 
 # Features
 
@@ -26,17 +26,18 @@ Prerequisites:
 - NodeJS installed on the machine.
 - Mongodb
   - Installed locally. [Guide here](https://docs.mongodb.com/manual/installation/)
-  - Or you can use free tier from [mlab](https://mlab.com/) or [mongodb](https://www.mongodb.com/cloud) itself.
+  - Or you can use free tier from [mongodb](https://www.mongodb.com/cloud) itself.
 - Your Discord bot's token. (Create Discord bot [here](https://discord.com/developers/applications))
 - Your Discord bot invited to your server.
 - A brain. 🧠
 
 ## Steps to start coding 🚀
 
-### Fork the repository by clicking `Fork` button at top of this page.
+### [Fork the repository](https://github.com/al5ina5/discord-joie-bot/fork)
 
 ### Clone your repository.
-
+<mention it shud be bash not win>
+  
 ```bash
 git clone git@github.com:YOUR_USER:YOUR_FORK.git
 ```
@@ -88,14 +89,20 @@ npm run dev
 
 - It does not. This is not quite a moderation/utility bot.
 
+
 **How can I host my bot when I'm away from my machine, 24/7?**
 
 - For that, you'll need to run the program on a remote machine. You'll need a VPS of your own. [You can get a VPS for less than \$10/month on https://revolt.host/!](https://revolt.host/)
 
+
+
 **Where can I donate?**
+
 
 - You can support [UNDERFORUMS on Patreon](https://www.patreon.com/underforums), send tips to my Bitcoin address (`3HFuhH4enDUKFqokiron6jyMSzPVwNHkTW`), or send me [XLM on Keybase (@youngseebi)](https://keybase.io/youngseebi)!
 
+
 **Can you develop a bot for me?**
 
-- I'd love to! Reach out to me if you'd like to hire me.
+- I'd love to! [Reach out to me if you'd like to hire me.](mailto:alsinas@me.com)
+
