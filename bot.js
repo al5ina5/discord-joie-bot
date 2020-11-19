@@ -7,11 +7,22 @@ const client = new Discord.Client()
 
 // Load all commands into the client's commands object from the /commands/ folder.
 client.commands = {}
+client.aliases = {}
 fs.readdir('./commands', (err, files) => {
     try {
         files.forEach(file => {
             var prop = require(`./commands/${file}`)
-            client.commands[file.split('.')[0]] = prop
+            var filename = file.split('.')[0];
+            client.commands[filename] = prop;
+            // if command has aliases
+            if (prop.aliases) {
+                for (alias of prop.aliases) {
+                    // add alias to object
+                    client.aliases[alias.toString()] = client.commands[filename] = prop; 
+                }
+                // add command to object
+                client.aliases[filename] = client.commands[filename] = prop;
+            }
         })
     } catch (err) {
         console.log(err)

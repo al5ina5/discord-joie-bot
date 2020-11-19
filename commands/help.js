@@ -15,18 +15,18 @@ exports.run = (client, message, args) => {
     }
 
     // If the command doesn't exist...
-    if (!Object.keys(client.commands).includes(searched.toLowerCase())) {
+    if (!Object.keys(client.aliases).includes(searched.toLowerCase())) {
         message.channel.send(`Sorry, but I don't think that command exists. Use \`${process.env.BOT_PREFIX}commands\` for a list of commands.`)
         return
     }
 
     // If the command doesn't have any help information set...
-    if (!client.commands[searched].help) {
+    if (!client.aliases[searched].help) {
         message.channel.send(`Sorry, but I don't have information on that command.`)
         return
     }
 
-    message.channel.send(client.commands[searched].help)
+    message.channel.send(client.aliases[searched].help)
     // message.channel.send(`\`${process.env.BOT_PREFIX}${searched}\` — ${client.commands[searched].help}`)
 }
 
