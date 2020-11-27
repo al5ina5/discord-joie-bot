@@ -53,7 +53,7 @@ cd YOUR_FORK
 cp .env.example .env
 ```
 
-### Setup your envinoment variables in `.env` file.
+### Setup your environment variables in `.env` file.
 
 ### Install npm dependencies
 
