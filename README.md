@@ -1,4 +1,4 @@
-# Discord Bot Boilerplate
+# Discord Joie Bot 
 
 A boilerplate to quickly deploy a powerful Discord bots. Quickly and painlessly deploy a powerful, lightweight and extremely easy-to-manage Discord bot for both beginners and expert users. No experience needed.
 
@@ -26,14 +26,14 @@ Prerequisites:
 - NodeJS installed on the machine.
 - Mongodb
   - Installed locally. [Guide here](https://docs.mongodb.com/manual/installation/)
-  - Or you can use free tier from [mlab](https://mlab.com/) or [mongodb](https://www.mongodb.com/cloud) itself.
+  - Or you can use free tier from [mongodb](https://www.mongodb.com/cloud).
 - Your Discord bot's token. (Create Discord bot [here](https://discord.com/developers/applications))
 - Your Discord bot invited to your server.
 - A brain. 🧠
 
 ## Steps to start coding 🚀
 
-### Fork the repository by clicking `Fork` button at top of this page.
+### [Fork the repository](https://github.com/al5ina5/discord-joie-bot/fork)
 
 ### Clone your repository.
 
