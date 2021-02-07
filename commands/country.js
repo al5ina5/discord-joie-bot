@@ -4,36 +4,9 @@ const command = require('../functions/helper-command')
 const db = require('../mongo')
 const Discord = require('discord.js')
 
-exports.run = async (client, message, args) => {
-    let arg1 = command.getFirstOption(args);
+exports.run = command.buildRunner(countryCommand)
 
-    let option;
-    for (i = 0; i < countryCommand.options.length; i++) {
-        if (countryCommand.options[i].aliases.find(alias => countryCommand.optPrefix + alias === arg1)) {
-            option = countryCommand.options[i]
-            break
-        }
-    }
-    if (option) option.handler(message, args, client, countryCommand)
-    else handleEmpty(message, args, client, countryCommand)
-}
-
-const handleEmpty = (message, args, client, ecommand) => {
-    if (args.length > 1) {
-        let discordUser = message.mentions.users.first();
-        if (discordUser)
-            handleFrom(message, args, client);
-        else
-            handleWho(message, args, client);
-    }
-    else {
-        handleHelp(message, args, client, ecommand);
-    }
-}
-
-const handleHelp = (message, args, client, ecommand) => {
-    command.sendHelp(message, ecommand);
-}
+exports.help = command.buildHelp(countryCommand)
 
 const handleSet = (message, args, client) => {
 
@@ -141,14 +114,14 @@ let countryCommand = {
         description: "If {mention}, will let you know where the user is from. If {country}, will return a list of users from said country.",
         params: '{mention | country string | country code} ',
         supportSpaces: true,
-        handler: handleEmpty
+        handler: command.handleEmpty
     },
     {
         aliases: ['help', 'halp'],
         description: "Will return a list of possible commands.",
         hide: true,
         params: '',
-        handler: handleHelp
+        handler: exports.help
     },
     {
         aliases: ['whofrom'],

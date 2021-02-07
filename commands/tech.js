@@ -5,33 +5,9 @@ const command = require('../functions/helper-command')
 const db = require('../mongo')
 const Discord = require('discord.js')
 
-exports.run = async (client, message, args) => {
-    let arg1 = command.getFirstOption(args)
+exports.run = command.buildRunner(techCommands)
 
-    let option
-    for (i = 0; i < techCommands.options.length; i++) {
-        if (techCommands.options[i].aliases.find((alias) => techCommands.optPrefix + alias === arg1)) {
-            option = techCommands.options[i]
-            break
-        }
-    }
-    if (option) option.handler(message, args, client, techCommands)
-    else handleEmpty(message, args, client, techCommands)
-}
-
-const handleEmpty = (message, args, client, ecommand) => {
-    if (args.length > 1) {
-        let discordUser = message.mentions.users.first()
-        if (discordUser) handleFrom(message, args, client)
-        else handleWho(message, args, client)
-    } else {
-        handleEmpty(message, args, client, ecommand)
-    }
-}
-
-const handleHelp = (message, args, client, ecommand) => {
-    command.sendHelp(message, ecommand)
-}
+exports.help = command.buildHelp(techCommands)
 
 const handleAdd = async (message, args, client) => {
     const discordUser = message.author
@@ -188,14 +164,14 @@ let techCommands = {
                 'If {+search techName} will show you a list of devs which use the technology, If {+add techName} will add a technology to your tech stack,If {+delete techName} will delete a technology from your tech stack.',
             params: '{techName}',
             supportSpaces: false,
-            handler: handleEmpty
+            handler: command.handleEmpty
         },
         {
             aliases: ['help', 'halp'],
             description: 'Will return a list of possible commands.',
             hide: true,
             params: '',
-            handler: handleHelp
+            handler: exports.help
         },
         {
             aliases: ['add', 'save'],
